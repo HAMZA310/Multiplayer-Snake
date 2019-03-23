@@ -1,3 +1,6 @@
+## in line 28, self.port should be same as in server.py file. It need be changed every time you play this game.
+# Actually this should be a command line arg, which needs 3,4 lines of code; Will you add those lines?
+
 # SNAKES GAME
 ## every client has a copy of this file. Server.py stores heads coordinates separately as well. 
 import socket
@@ -23,7 +26,7 @@ class Network:
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.host = 'localhost' 
-        self.port = 2412
+        self.port = 5458
         # print('here')        
         self.addr = (self.host, self.port)
         self.id, self.initial_heads, self.food = self.connect() ## ids given by server. 
