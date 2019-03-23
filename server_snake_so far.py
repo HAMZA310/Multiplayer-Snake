@@ -44,7 +44,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 server = 'localhost'
-port = PORT
+port = 5458
 
 server_ip = socket.gethostbyname(server)
 
@@ -80,12 +80,14 @@ def threaded_client(conn):
                 conn.send(str.encode("Disconnected"))
                 break
                             
-            else:
+            if data:
+                print('hit before')
                 if reply == 'No food':
-                    print('handling food', self.food)
+                    # data = conn.recv(2048)
+                    # print('handling food', s.food)
                     stage.set_food()
-                    print('>>>>>>> req recvd for food', str(self.food))
-                    reply = str(tuple(self.food))
+                    print('>>>>>>> req recvd for food', str(stage.food))
+                    reply = str(tuple(stage.food))
 
                 else:
                     id_snakeHead = reply
@@ -97,7 +99,7 @@ def threaded_client(conn):
                     food = stage.food ## think about it
                     reply = str((stage.snake_heads, food)) ## think about it
                     print("Sending: " + reply)
-
+                print('hit after')
                 conn.sendall(str.encode(reply)) # reply is either
                                                 # food or (heads,food)
         except:
@@ -107,10 +109,9 @@ def threaded_client(conn):
     conn.close()
 
 while True:
-    global num_of_connected_clients
+    # global num_of_connected_clients
     conn, addr = s.accept()
-    num_of_connected_clients = num_of_connected_clients + 1
+    # num_of_connected_clients = num_of_connected_clients + 1
     print("Connected to: ", addr)
 
     start_new_thread(threaded_client, (conn,))
-
