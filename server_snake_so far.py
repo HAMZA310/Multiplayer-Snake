@@ -1,4 +1,5 @@
-
+## in line 47, give some distinct random port every time you play this game. See first line comment in client.py. 
+## Also, remember to open client.py on 2 terminals. Works fine on 2 terminals. Test it for more than 2, I haven't done so.
 
 import socket
 from _thread import *
@@ -44,7 +45,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 server = 'localhost'
-port = PORT
+port = 5458
 
 server_ip = socket.gethostbyname(server)
 
@@ -107,9 +108,9 @@ def threaded_client(conn):
     conn.close()
 
 while True:
-    global num_of_connected_clients
+    # global num_of_connected_clients
     conn, addr = s.accept()
-    num_of_connected_clients = num_of_connected_clients + 1
+    # num_of_connected_clients = num_of_connected_clients + 1
     print("Connected to: ", addr)
 
     start_new_thread(threaded_client, (conn,))
