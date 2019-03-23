@@ -158,6 +158,12 @@ while True:
     #Send None to server. Server will disconnect
     
     if this_snake[0] == food: # When snake eats the food
+        ### ************************* FOOD BUG ************************* ###
+        ## In the next code line (line 167), server is asked to give food; But unluckily instead of waiting for server's response
+        ## it goes to next line. Compare it with line 129, where it moves to next line, once reponse from server is 
+        ## received.
+        ### ************************* FOOD BUG ************************* ###
+
         food = s.net.send('No food')
         print('food:', food)
         food = remove_quotes(food)
