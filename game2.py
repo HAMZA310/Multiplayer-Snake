@@ -8,7 +8,7 @@ import ast
 from ast import literal_eval as remove_quotes
 import time
 # from network import Network # class (client.py/network.py)
-
+asked_for_food = False
 curses.initscr()
 win = curses.newwin(20, 60, 0, 0)
 win.keypad(1)
@@ -23,11 +23,10 @@ class Network:
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.host = 'localhost' 
-        self.port = 2412
+        self.port = 5458
         # print('here')        
         self.addr = (self.host, self.port)
-        self.id, self.initial_heads, self.food = self.connect() ## ids given by server. 
-        self.num_of_connected_clients = 2
+        self.id, self.initial_heads, self.food = self.connect() 
 
     def connect(self):
         self.client.connect(self.addr)
@@ -155,8 +154,8 @@ while True:
     #Send None to server. Server will disconnect
     
     if this_snake[0] == food: # When snake eats the food
+        asked_for_food = True
         food = s.net.send('No food')
-        print('food:', food)
         food = remove_quotes(food)
         win.addch(food[0], food[1], '*')
     else:    
@@ -175,7 +174,6 @@ while True:
     
 
 curses.endwin()
-
 
 
 
