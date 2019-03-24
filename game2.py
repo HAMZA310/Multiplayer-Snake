@@ -158,6 +158,7 @@ while True:
         asked_for_food = True
         food = s.net.send('No food')
         food = remove_quotes(food)
+        win.addch(food[0], food[1], ' ')
         win.addch(food[0], food[1], '*')
     else:    
         ## prev tails vanish of all snakes. 
