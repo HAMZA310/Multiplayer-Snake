@@ -22,8 +22,8 @@ class Network:
         # print('at start')
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.host = 'localhost' 
-        self.port = 5458
+        self.host = 'localhost'
+        self.port = 5460
         # print('here')        
         self.addr = (self.host, self.port)
         self.id, self.initial_heads, self.food = self.connect() 
@@ -124,7 +124,8 @@ while True:
     # *********** SENDING TO SERVER   *********** #
     all_snakes_heads_food = s.net.send(id_and_this_snake_head)
     all_snakes_heads, food = remove_quotes(all_snakes_heads_food)
-    
+    win.addch(food[0], food[1], '*') # Prints the food
+
     s.update_snakes_heads(all_snakes_heads)
     s.update_other_snakes(all_snakes_heads)
 
@@ -174,6 +175,7 @@ while True:
     
 
 curses.endwin()
+
 
 
 
