@@ -23,7 +23,7 @@ class Network:
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.host = 'localhost'
-        self.port = 5460
+        self.port = 5465
         # print('here')        
         self.addr = (self.host, self.port)
         self.id, self.initial_heads, self.food = self.connect() 
@@ -75,7 +75,6 @@ class Snakes(object):
             if snake_id != self.net.id: # this snake already updated. 
                 new_head = head_in_list[0]
                 self.snakes[snake_id].insert(0, new_head)
-#                 self.snakes[snake_id].pop() 
     
     def get_this_snake(self): # snake of this client
         snake_id = int(self.net.id)
@@ -122,6 +121,7 @@ while True:
     id_and_this_snake_head = str((this_snake_id, this_snake_head))
    
     # *********** SENDING TO SERVER   *********** #
+    win.addch(food[0], food[1], ' ')
     all_snakes_heads_food = s.net.send(id_and_this_snake_head)
     all_snakes_heads, food = remove_quotes(all_snakes_heads_food)
     win.addch(food[0], food[1], '*') # Prints the food
@@ -135,9 +135,6 @@ while True:
     if this_snake[0][0] == 0 or \
         this_snake[0][0] == 19 or this_snake[0][1] == 0 \
             or this_snake[0][1] == 59: break
-
-    # # If snake runs over itself, remove that client's snake
-    # if this_snake[0] in this_snake[1:]: break
 
     # if head of snake 1 collides with any part
     for _id, snake in s.snakes.items():
@@ -164,14 +161,11 @@ while True:
         ## prev tails vanish of all snakes. 
         for _, snake in s.snakes.items():  ## you're popping last elm of every snake
             tail = snake.pop() # prev tail vanishes coupled with new head appears in next line i.e. snake appears to move fwd
-            # print('tail to vanish:', tail[0], tail[1])
             win.addch(tail[0], tail[1], ' ')
 
     # show all snakes 
     # print(s.snakes)
     for _, snake in s.snakes.items():
-#         print('a snake: ', snake)
-#         print('snake head to put at:', snake[0][0], snake[0][1])
         win.addch(snake[0][0], snake[0][1], '$')
     
 
